@@ -1,12 +1,10 @@
-import { Link } from "react-router-dom";
 import FormLogin from "../components/Fragments/FormLogin";
 import AuthLayout from "../components/Layouts/AuthLayout";
 
 const LoginPage = () => {
     return (
-        <AuthLayout title="Login">
+        <AuthLayout title="Login" type="login">
             <FormLogin />
-            <p className="text-md text-slate-500 font-medium">Dont have an account? <Link className="text-green-500" to="/register">Register</Link></p>
         </AuthLayout>
     )
 }
