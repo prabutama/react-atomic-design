@@ -26,7 +26,7 @@ const FormRegister = ({ action, method }) => {
                     placeholder="*****"
                     name="confirm-password" />
                 <Button
-                    color='bg-green-500'
+                    style='bg-green-500'
                     type="submit"
                     text="Register" />
             </div>

@@ -2,11 +2,6 @@ import { Link } from "react-router-dom";
 
 const AuthLayout = ({ children, title, type }) => {
 
-    const Suggestion = ({text, to, textLink}) => {
-        return (
-            <p className="text-md text-slate-500 font-medium">{text}<Link className="text-green-500" to={to}> {textLink}</Link></p>
-        )
-    }
 
     return (
         <div className="flex min-h-screen justify-center items-center">
@@ -21,6 +16,12 @@ const AuthLayout = ({ children, title, type }) => {
                 }
             </div>
         </div>
+    )
+}
+
+const Suggestion = ({text, to, textLink}) => {
+    return (
+        <p className="text-md text-slate-500 font-medium">{text}<Link className="text-green-500" to={to}> {textLink}</Link></p>
     )
 }
 

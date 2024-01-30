@@ -16,7 +16,7 @@ const FormLogin = ({action, method}) => {
                     placeholder="*****"
                     name="password" />
                 <Button
-                    color='bg-green-500'
+                    style='bg-green-500'
                     type="submit"
                     text="Login" />
             </div>
