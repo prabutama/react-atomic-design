@@ -1,9 +1,15 @@
 import Button from "../Elements/Button"
 import InputForm from "../Elements/Input"
 
-const FormLogin = ({action, method}) => {
+const FormLogin = () => {
+    const handleLogin = (event) => {
+        event.preventDefault();
+        localStorage.setItem('email', event.target.email.value);
+        localStorage.setItem('password', event.target.password.value);
+        window.location.href='/products';
+    }
     return (
-        <form action={action} method={method}>
+        <form onSubmit={handleLogin}>
             <div className="mb-6">
                 <InputForm
                     label="Email"

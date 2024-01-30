@@ -1,7 +1,12 @@
-const Button = ({ type, style, text }) => {
+const Button = ({ type, style, text, onClick }) => {
     return (
-        <div>
-            <button type={type} className={`${style} px-3 py-2 rounded-full border my-4 text-white font-medium w-full hover:opacity-90`}>{text}</button>
+        <div className="text-white">
+            <button
+                type={type}
+                className={`${style} px-3 py-2 rounded-full border my-4 font-medium w-full hover:opacity-90`}
+                onClick={onClick}>
+                {text}
+            </button>
         </div>
     )
 }

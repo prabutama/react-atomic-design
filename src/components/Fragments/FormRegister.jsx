@@ -1,9 +1,9 @@
 import Button from "../Elements/Button";
 import InputForm from "../Elements/Input";
 
-const FormRegister = ({ action, method }) => {
+const FormRegister = () => {
     return (
-        <form action={action} method={method}>
+        <form>
             <div className="mb-6">
                 <InputForm
                     label="Name"

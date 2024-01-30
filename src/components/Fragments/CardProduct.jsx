@@ -2,7 +2,7 @@ import Button from "../Elements/Button";
 
 const CardProduct = ({ children }) => {
     return (
-        <div className="w-full max-w-sm rounded-md border-2 border-green-900 p-3 text-white bg-gray-600 flex flex-col justify-between">
+        <div className="w-full max-w-sm rounded-md border-2 border-green-900 p-3 text-white bg-black flex flex-col justify-between">
             {children}
         </div>
     )
@@ -32,7 +32,7 @@ const Footer = ({ price }) => {
         <div className="flex justify-between items-center">
             <p className="font-medium">Rp {price}</p>
             <div className="w-1/3">
-                <Button type="submit" style="bg-green-400" text="Buy" />
+                <Button type="submit" style="bg-green-500 rounded-md" text="Buy" />
             </div>
         </div>
     )
