@@ -12,17 +12,17 @@ const Image = ({ src }) => {
     return (
         <div>
             <a href="#">
-                <img src={src} alt="shoes" />
+                <img src={src} alt="shoes" className="w-full h-72 object-cover" />
             </a>
         </div>
     )
 }
 
-const Body = ({ name, children }) => {
+const Body = ({ title, children }) => {
     return (
         <div className="h-full">
-            <h1 className="text-xl font-semibold mb-2">{name}</h1>
-            <p>{children}</p>
+            <h1 className="text-xl font-semibold mb-2">{title.substring(0,20)} ...</h1>
+            <p>{children.substring(0,200)} ...</p>
         </div>
     )
 }
@@ -30,7 +30,7 @@ const Body = ({ name, children }) => {
 const Footer = ({ price,  handleAddToCart, id }) => {
     return (
         <div className="flex justify-between items-center">
-            <p className="font-medium">Rp {price.toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}</p>
+            <p className="font-medium">$ {price.toLocaleString('id-ID', { styles: 'currency', currency: 'USD' })}</p>
             <div className="w-1/3">
                 <Button type="submit" style="bg-green-500 rounded-md" text="Add to cart" onClick={() => handleAddToCart(id)}/>
             </div>
