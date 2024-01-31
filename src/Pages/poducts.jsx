@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import CardProduct from "../components/Fragments/CardProduct";
 import Button from "../components/Elements/Button";
 
@@ -30,12 +30,22 @@ const products = [
 ]
 
 const ProductsPage = () => {
-    const [cart, setCart] = useState([
-        {
-            id: 3,
-            qty: 1,
+    const [cart, setCart] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+    useEffect(() => {
+        setCart(JSON.parse(localStorage.getItem('cart')) || []);
+    }, []);
+
+    useEffect(() => {
+        if (cart.length > 0) {
+            const sum = cart.reduce((acc, item) => {
+                const product = products.find((product) => product.id === item.id);
+                return acc + product.price * item.qty;
+            }, 0);
+            setTotalPrice(sum);
+            localStorage.setItem('cart', JSON.stringify(cart));
         }
-    ]);
+    }, [cart]);
     const handleLogout = () => {
         localStorage.removeItem('email');
         localStorage.removeItem('password');
@@ -51,6 +61,7 @@ const ProductsPage = () => {
         }
 
     }
+
     return (
         <Fragment>
             <div
@@ -85,13 +96,6 @@ const ProductsPage = () => {
                 </div>
                 <div className="w-[30%]">
                     <h1 className="text-3xl font-medium text-green-500 ml-5">Cart</h1>
-                    {/* <ul>
-                        {
-                            cart.map((item) => (
-                                <li key={item}>{item.qty}</li>
-                            ))
-                        }
-                    </ul> */}
                     <table className="my-4 text-left table-auto border-separate border-spacing-x-6 w-full">
                         <thead>
                             <tr>
@@ -122,9 +126,19 @@ const ProductsPage = () => {
                                                 currency: 'IDR'
                                             })}</td>
                                     </tr>
+
                                 )
                             })
                             }
+                            <tr className="font-bold">
+                                <td colSpan={3}>Total price</td>
+                                <td>Rp {totalPrice
+                                    .toLocaleString('id-ID', {
+                                        styles: 'currency',
+                                        currency: 'IDR'
+                                    })}
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
