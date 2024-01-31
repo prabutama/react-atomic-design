@@ -27,12 +27,12 @@ const Body = ({ name, children }) => {
     )
 }
 
-const Footer = ({ price }) => {
+const Footer = ({ price,  handleAddToCart, id }) => {
     return (
         <div className="flex justify-between items-center">
-            <p className="font-medium">Rp {price}</p>
+            <p className="font-medium">Rp {price.toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}</p>
             <div className="w-1/3">
-                <Button type="submit" style="bg-green-500 rounded-md" text="Buy" />
+                <Button type="submit" style="bg-green-500 rounded-md" text="Add to cart" onClick={() => handleAddToCart(id)}/>
             </div>
         </div>
     )
