@@ -2,11 +2,13 @@ import { Fragment, useEffect, useState } from "react";
 import CardProduct from "../components/Fragments/CardProduct";
 import Button from "../components/Elements/Button";
 import { getProducts } from "../services/product.service";
+import { getUsername } from "../services/auth.service";
 
 const ProductsPage = () => {
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [products, setProducts] = useState([])
+    const [username, setUsername] = useState('');
 
     useEffect(() => {
         setCart(JSON.parse(localStorage.getItem('cart')) || []);
@@ -26,12 +28,19 @@ const ProductsPage = () => {
     useEffect(() => {
         getProducts((data) => {
             setProducts(data)
-            console.log(data);
         });
-    })
+    }, [])
+    
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setUsername(getUsername(token));
+        } else {
+            window.location.href = '/login';
+        }
+    }, [])
     const handleLogout = () => {
-        localStorage.removeItem('email');
-        localStorage.removeItem('password');
+        localStorage.removeItem('token');
         window.location.href = '/login';
     }
     const handleAddToCart = (id) => {
@@ -47,18 +56,15 @@ const ProductsPage = () => {
 
     return (
         <Fragment>
-            <div
+            <header
                 className="bg-green-500 h-20 flex justify-end items-center px-10 font-medium rext-2xl text-white">
-                {localStorage.getItem('email')
-                    ? localStorage.getItem('email')
-                    : ''
-                }
+                    <p className="text-2xl font-medium">{username}</p>
                 <Button
                     type="submit"
-                    style="bg-white text-green-500 mx-4"
+                    style="bg-black text-white mx-4 border-0"
                     text="Logout"
                     onClick={handleLogout} />
-            </div>
+            </header>
             <div className="flex justify-between my-4 px-10">
                 <div className="w-[70%] flex flex-wrap gap-10">
                     {
