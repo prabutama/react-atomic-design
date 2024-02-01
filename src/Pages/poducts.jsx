@@ -2,13 +2,13 @@ import { Fragment, useEffect, useState } from "react";
 import CardProduct from "../components/Fragments/CardProduct";
 import Button from "../components/Elements/Button";
 import { getProducts } from "../services/product.service";
-import { getUsername } from "../services/auth.service";
+import { useLogin } from "../hooks/useLogin";
 
 const ProductsPage = () => {
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [products, setProducts] = useState([])
-    const [username, setUsername] = useState('');
+    const username = useLogin()
 
     useEffect(() => {
         setCart(JSON.parse(localStorage.getItem('cart')) || []);
@@ -30,15 +30,7 @@ const ProductsPage = () => {
             setProducts(data)
         });
     }, [])
-    
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setUsername(getUsername(token));
-        } else {
-            window.location.href = '/login';
-        }
-    }, [])
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         window.location.href = '/login';
@@ -58,7 +50,9 @@ const ProductsPage = () => {
         <Fragment>
             <header
                 className="bg-green-500 h-20 flex justify-end items-center px-10 font-medium rext-2xl text-white">
-                    <p className="text-2xl font-medium">{username}</p>
+                {
+                    username && <p className="text-2xl font-medium">{username}</p>
+                }
                 <Button
                     type="submit"
                     style="bg-black text-white mx-4 border-0"

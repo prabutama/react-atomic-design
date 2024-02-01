@@ -4,11 +4,9 @@ import Button from "../Elements/Button"
 import InputForm from "../Elements/Input"
 
 const FormLogin = () => {
-    const [failedLogin, setFailedLogin] = useState([]);
+    const [failedLogin, setFailedLogin] = useState('');
     const handleLogin = (event) => {
         event.preventDefault();
-        // localStorage.setItem('email', event.target.email.value);
-        // localStorage.setItem('password', event.target.password.value);
         const data = {
             username: event.target.username.value,
             password: event.target.password.value
@@ -16,11 +14,12 @@ const FormLogin = () => {
         login(data, (status, res) => {
             if (status) {
                 localStorage.setItem("token", res);
+                window.location.href = '/products';
             } else {
                 setFailedLogin(res.response.data);
+                console.log(res.response.data);
             }
-        })
-        window.location.href = '/products';
+        })   
     }
     return (
         <form onSubmit={handleLogin}>
