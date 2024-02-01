@@ -10,7 +10,6 @@ const DetailProductPage = () => {
             setProduct(data);
         });
     }, [id]);
-    console.log(product);
     return (
         <div className="h-screen flex justify-center items-center">
             <div>
@@ -20,7 +19,7 @@ const DetailProductPage = () => {
                         <div className="flex-none w-48 relative">
                             <img src={product.image} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                         </div>
-                        <form className="flex-auto p-6">
+                        <div className="flex-auto p-6">
                             <div className="flex flex-wrap">
                                 <h1 className="flex-auto text-lg font-semibold text-slate-900">
                                     {product.title}
@@ -84,7 +83,7 @@ const DetailProductPage = () => {
                                     </svg>
                                 </button>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 }
             </div>
