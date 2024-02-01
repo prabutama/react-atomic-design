@@ -3,6 +3,7 @@ import CardProduct from "../components/Fragments/CardProduct";
 import Button from "../components/Elements/Button";
 import { getProducts } from "../services/product.service";
 import { useLogin } from "../hooks/useLogin";
+import { Link } from "react-router-dom";
 
 const ProductsPage = () => {
     const [cart, setCart] = useState([]);
@@ -66,7 +67,9 @@ const ProductsPage = () => {
                         products.map((product) => {
                             return (
                                 <CardProduct key={product.id}>
-                                    <CardProduct.Image src={product.image} />
+                                    <Link to={`/product/${product.id}`}>
+                                        <CardProduct.Image src={product.image} />
+                                    </Link>
                                     <CardProduct.Body title={product.title}>
                                         {product.description}
                                     </CardProduct.Body>
