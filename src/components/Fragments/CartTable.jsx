@@ -35,7 +35,7 @@ const CartTable = ({ products }) => {
                             );
                             return (
                                 <tr key={item.id}>
-                                    <td className="font-medium">{product.title.substring(0, 20)}</td>
+                                    <td className="font-medium">{product.title.substring(0, 20)}...</td>
                                     <td className="font-medium">$ {product.price
                                         .toLocaleString('id-ID', {
                                             styles: 'currency',
