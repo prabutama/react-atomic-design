@@ -1,30 +1,14 @@
 import { Fragment, useEffect, useState } from "react";
 import CardProduct from "../components/Fragments/CardProduct";
-import Button from "../components/Elements/Button";
 import { getProducts } from "../services/product.service";
 import { useLogin } from "../hooks/useLogin";
 import { Link } from "react-router-dom";
+import CartTable from "../components/Fragments/CartTable";
+import Navbar from "../components/Layouts/Navbar";
 
 const ProductsPage = () => {
-    const [cart, setCart] = useState([]);
-    const [totalPrice, setTotalPrice] = useState(0);
     const [products, setProducts] = useState([])
-    const username = useLogin()
-
-    useEffect(() => {
-        setCart(JSON.parse(localStorage.getItem('cart')) || []);
-    }, []);
-
-    useEffect(() => {
-        if (products.length > 0 && cart.length > 0) {
-            const sum = cart.reduce((acc, item) => {
-                const product = products.find((product) => product.id === item.id);
-                return acc + product.price * item.qty;
-            }, 0);
-            setTotalPrice(sum);
-            localStorage.setItem('cart', JSON.stringify(cart));
-        }
-    }, [cart, products]);
+    useLogin();
 
     useEffect(() => {
         getProducts((data) => {
@@ -32,34 +16,9 @@ const ProductsPage = () => {
         });
     }, [])
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        window.location.href = '/login';
-    }
-    const handleAddToCart = (id) => {
-        if (cart.find(item => item.id === id)) {
-            setCart(
-                cart.map(item => item.id === id ? { ...item, qty: item.qty + 1 } : item)
-            );
-        } else {
-            setCart([...cart, { id, qty: 1 }]);
-        }
-
-    }
-
     return (
         <Fragment>
-            <header
-                className="bg-green-500 h-20 flex justify-end items-center px-10 font-medium rext-2xl text-white">
-                {
-                    username && <p className="text-2xl font-medium">{username}</p>
-                }
-                <Button
-                    type="submit"
-                    style="bg-black text-white mx-4 border-0"
-                    text="Logout"
-                    onClick={handleLogout} />
-            </header>
+            <Navbar />
             <div className="flex justify-between my-4 px-10">
                 <div className="w-[70%] flex flex-wrap gap-10">
                     {
@@ -75,8 +34,7 @@ const ProductsPage = () => {
                                     </CardProduct.Body>
                                     <CardProduct.Footer
                                         price={product.price}
-                                        id={product.id}
-                                        handleAddToCart={handleAddToCart} />
+                                        id={product.id} />
                                 </CardProduct>
                             )
                         })
@@ -84,51 +42,7 @@ const ProductsPage = () => {
                 </div>
                 <div className="w-[30%]">
                     <h1 className="text-3xl font-medium text-green-500 ml-5">Cart</h1>
-                    <table className="my-4 text-left table-auto border-separate border-spacing-x-6 w-full">
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>qty</th>
-                                <th>total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {products.length > 0 &&
-                                cart.map((item) => {
-                                    const product = products.find(
-                                        (product) => product.id === item.id
-                                    );
-                                    return (
-                                        <tr key={item.id}>
-                                            <td className="font-medium">{product.title.substring(0, 20)}</td>
-                                            <td className="font-medium">$ {product.price
-                                                .toLocaleString('id-ID', {
-                                                    styles: 'currency',
-                                                    currency: 'USD'
-                                                })}</td>
-                                            <td className="font-medium">{item.qty}</td>
-                                            <td className="font-medium">$ {(item.qty * product.price)
-                                                .toLocaleString('id-ID', {
-                                                    styles: 'currency',
-                                                    currency: 'USD'
-                                                })}</td>
-                                        </tr>
-
-                                    )
-                                })
-                            }
-                            <tr className="font-bold">
-                                <td colSpan={3}>Total price</td>
-                                <td>$ {totalPrice
-                                    .toLocaleString('id-ID', {
-                                        styles: 'currency',
-                                        currency: 'USD'
-                                    })}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <CartTable products={products} />
                 </div>
             </div>
         </Fragment>
