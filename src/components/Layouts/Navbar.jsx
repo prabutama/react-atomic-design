@@ -1,8 +1,9 @@
 import { ShoppingCart } from "@phosphor-icons/react";
 import { useLogin } from "../../hooks/useLogin";
 import Button from "../Elements/Button";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { DarkMode } from "../../context/DarkMode";
 
 const Navbar = () => {
     const username = useLogin();
@@ -20,12 +21,19 @@ const Navbar = () => {
         setTotalCart(sum)
     }, [cart]);
 
+    const { isDarkMode, setIsDarkMode } = useContext(DarkMode);
+    console.log(isDarkMode)
+    const darkModeHandler = () => {
+        setIsDarkMode(!isDarkMode)
+    }
+
     return (
-        <header className="bg-green-500 h-20 flex justify-end items-center px-10 font-medium rext-2xl text-white sticky top-0 mb-10 gap-5">
+        <header className="bg-green-500 h-20 flex justify-end items-center px-10 font-medium rext-2xl text-white sticky top-0 gap-5">
+            <input type="checkbox" className="toggle" onChange={darkModeHandler} />
             <div className="relative">
                 <ShoppingCart size={32} color="#ffffff" weight="fill" />
                 <div className="absolute bg-red-500 text-xs p-1 rounded-full -top-3 -right-1">
-                    { totalCart }
+                    {totalCart}
                 </div>
             </div>
             {

@@ -5,7 +5,7 @@ const Input = ({placeholder, type, name}) => {
         type={type}
         name={name}
         id={name}
-        className="text-sm border w-full rounded-lg py-2 px-2" />
+        className="text-sm border w-full rounded-lg py-2 px-2 " />
     )
 }
 
