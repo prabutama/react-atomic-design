@@ -1,14 +1,16 @@
-import { ShoppingCart } from "@phosphor-icons/react";
+import { CurrencyDollarSimple, ShoppingCart } from "@phosphor-icons/react";
 import { useLogin } from "../../hooks/useLogin";
 import Button from "../Elements/Button";
 import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { DarkMode } from "../../context/DarkMode";
+import { useTotalPrice } from "../../context/TotalPriceContext";
 
 const Navbar = () => {
     const username = useLogin();
     const [totalCart, setTotalCart] = useState(0);
     const cart = useSelector((state) => state.cart.data);
+    const { total } = useTotalPrice();
     const handleLogout = () => {
         localStorage.removeItem('token');
         window.location.href = '/login';
@@ -35,6 +37,10 @@ const Navbar = () => {
                 <div className="absolute bg-red-500 text-xs p-1 rounded-full -top-3 -right-1">
                     {totalCart}
                 </div>
+            </div>
+            <div className="text-lg p-1 rounded-md flex justify-center items-center bg-black px-3">
+                <CurrencyDollarSimple size={32} color="#ffffff" weight="bold" />
+                {total}
             </div>
             {
                 username && <p className="text-2xl font-medium">{username}</p>

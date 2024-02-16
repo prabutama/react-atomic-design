@@ -21,7 +21,7 @@ const ProductsPage = () => {
     return (
         <Fragment>
             <Navbar />
-            <div className={`flex justify-between px-10 pt-24 ${isDarkMode && 'bg-slate-800 text-whiteqq'} `}>
+            <div className={`flex justify-between px-10 pt-24 ${isDarkMode && 'bg-slate-800 text-white'} `}>
                 <div className="w-[70%] flex flex-wrap gap-10">
                     {
                         products.length > 0 &&
